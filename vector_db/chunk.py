@@ -5,10 +5,10 @@ class Chunk:
     text: str
     vector: np.ndarray
     doc_id: str
-    chunk_id: int
+    chunk_id: str
     metadata: dict  
 
-    def __init__(self, text: str, vector: np.ndarray = None, doc_id: str = None, chunk_id: int = None, metadata: dict = None):
+    def __init__(self, text: str, vector: np.ndarray = None, doc_id: str = None, chunk_id: str = None, metadata: dict = None):
         self.text = text
         self.vector = vector
         self.doc_id = doc_id
