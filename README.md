@@ -1,6 +1,6 @@
-# Pluggable Embedding RAG uses FAISS
+# RAG
 
-FAISS Index based retrieval.
+Retrieval based on FAISS Indexes on Custom Embeddings.
 
 Files supported as Input:
 - Text files
