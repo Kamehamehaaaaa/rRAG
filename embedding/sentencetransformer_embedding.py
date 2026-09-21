@@ -1,4 +1,4 @@
-from embedding import AbstractEmbedding
+from embedding.abstract_embedding import AbstractEmbedding
 from sentence_transformers import SentenceTransformer
 from typing import List
 

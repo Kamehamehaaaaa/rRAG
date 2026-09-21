@@ -1,6 +1,7 @@
-from embedding import AbstractEmbedding
+from embedding.abstract_embedding import AbstractEmbedding
 import os
 import openai
+import numpy as np
 
 class OpenAIEmbeddings(AbstractEmbedding):
     def __init__(self, api_key: str = None):
@@ -12,4 +13,4 @@ class OpenAIEmbeddings(AbstractEmbedding):
             input=texts,
             model="text-embedding-3-small"
         )
-        return [data["embedding"] for data in r["data"]]
+        return [np.asarray(data["embedding"], dtype="float32") for data in r["data"]]

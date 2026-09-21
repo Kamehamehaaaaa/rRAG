@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import List
 from vector_db.chunk import Chunk
 from embedding.registry import get
+import numpy as np
 
 def split_into_chunks(text: str,
                       max_sentences: int = 6,
@@ -42,5 +43,5 @@ def embed_chunks(chunks: List[Chunk], embedder, batch_size: int = 64) -> List[Ch
         if len(vectors) != len(batch):
             raise ValueError(f"embedder returned {len(vectors)} vectors for {len(batch)} texts")
         for chunk, vec in zip(batch, vectors):
-            chunk.vector = vec
+            chunk.vector = np.asarray(vec, dtype="float32")
     return chunks

@@ -1,5 +1,5 @@
 from typing import Dict, Type
-from embedding import AbstractEmbedding
+from embedding.abstract_embedding import AbstractEmbedding
 
 _registry: Dict[str, Type[AbstractEmbedding]] = {}
 
@@ -23,8 +23,8 @@ def remove_provider(name: str):
         del _registry[name]
 
 def default_registry() -> Dict[str, Type[AbstractEmbedding]]:
-    from embedding.openai_embedding import OpenAIEmbeddings
+    # from embedding.openai_embedding import OpenAIEmbeddings
     from embedding.sentencetransformer_embedding import SentenceTransformerEmbedding
 
-    register("openai", OpenAIEmbeddings)
+    # register("openai", OpenAIEmbeddings)
     register("sentence_transformer", SentenceTransformerEmbedding)

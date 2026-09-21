@@ -13,7 +13,7 @@ from pathlib import Path
 import config
 from ingest.pipeline import data_pipeline, add_data
 
-from embedding.registry import get
+from embedding.registry import get, default_registry
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -32,6 +32,7 @@ def main() -> None:
     subparsers.add_parser("add", parents=[common], help="Append new data to the existing index.")
 
     args = parser.parse_args()
+    default_registry()  # ensure the default embedding is registered
     embedder = get(args.embedding)
 
     if args.command == "build":

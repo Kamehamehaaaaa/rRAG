@@ -3,7 +3,7 @@ import re
 import shutil
 from typing import List, Tuple
 
-from .manifest import read_generation
+from .manifest import _read_generation
 
 _GEN_DIRNAME_RE = re.compile(r"^gen_(\d{6})$")
 _GEN_WIDTH = 6
@@ -40,7 +40,7 @@ def list_generation_dirs(index_root: Path) -> List[Tuple[int, Path]]:
 
 
 def current_gen_dir(index_root: Path, manifest_path: Path) -> Path:
-    gen = read_generation(manifest_path)
+    gen = _read_generation(manifest_path)
     if gen is None:
         gen = 0
     path = gen_dir(index_root, gen)
@@ -58,7 +58,7 @@ def new_gen_dir(index_root: Path, gen: int) -> Path:
 
 
 def next_gen_number(manifest_path: Path) -> int:
-    current = read_generation(manifest_path)
+    current = _read_generation(manifest_path)
     return 0 if current is None else current + 1
 
 
@@ -67,7 +67,7 @@ def gc_old_generations(
     manifest_path: Path,
     keep: int = 3,
 ) -> List[Path]:
-    current = read_generation(manifest_path)
+    current = _read_generation(manifest_path)
     all_gens = list_generation_dirs(index_root)  # oldest -> newest
 
     if len(all_gens) <= keep:
