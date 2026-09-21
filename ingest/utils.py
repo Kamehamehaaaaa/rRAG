@@ -5,29 +5,11 @@ from embedding.registry import get
 import numpy as np
 from loaders.registry import get_loader
 
-
-def split_into_chunks(text: str,
-                      max_sentences: int = 6,
-                      delimiter: str = '\n') -> List[str]:
-
-    # TODO: sentence_transformers attention is 256 tokens. 
-    # 6 sentences can have more than that no checking or limiting currently.
-    paragraphs = [p for p in text.split(delimiter) if p.strip()]
-    chunks = []
-    buffer = []
-    for p in paragraphs:
-        buffer.append(p.strip())
-        if len(buffer) >= max_sentences:
-            chunks.append(' '.join(buffer))
-            buffer = []
-    if buffer:
-        chunks.append(' '.join(buffer))
-    return chunks
-
 def make_chunks_from_dir(folder: Path,
-                         max_sentences_per_chunk: int = 6) -> List[Chunk]:
+                         max_sentences_per_chunk: int = 6,
+                         max_chars: int | None = None) -> List[Chunk]:
     if not folder.is_dir():
-        return get_loader(folder).load(folder, chunk_size=max_sentences_per_chunk)
+        return get_loader(folder).load(folder, chunk_size=max_sentences_per_chunk, max_chars=max_chars)
     all_chunks = []
     for file in folder.rglob('*'):
         if not file.is_file():
@@ -36,7 +18,7 @@ def make_chunks_from_dir(folder: Path,
             loader = get_loader(file)
         except ValueError:
             continue  # unsupported extension
-        all_chunks.extend(loader.load(file, max_sentences_per_chunk))
+        all_chunks.extend(loader.load(file, max_sentences_per_chunk, max_chars=max_chars))
         # raw = txt_file.read_text(encoding='utf-8')
         # chunks = split_into_chunks(raw,
         #                          max_sentences=max_sentences_per_chunk,

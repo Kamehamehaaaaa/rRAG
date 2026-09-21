@@ -7,9 +7,19 @@ from vector_db.chunk import Chunk
 
 from embedding.abstract_embedding import AbstractEmbedding
 
+FALLBACK_MAX_CHARS = 1000
+CHARS_PER_TOKEN_ESTIMATE = 4  # rough estimate, varies by language and model
+
+def _resolve_max_chars(embedder) -> int:
+    if embedder.max_seq_length is None:
+        return FALLBACK_MAX_CHARS
+    # 10% margin for [CLS]/[SEP] and the estimate is rough
+    return int(embedder.max_seq_length * CHARS_PER_TOKEN_ESTIMATE * 0.9)
+
 
 def _prepare_chunks(data_dir: Path, embedder: AbstractEmbedding, chunk_size: int) -> list[Chunk]:
-    chunks = make_chunks_from_dir(data_dir, chunk_size)
+    max_chars = _resolve_max_chars(embedder)
+    chunks = make_chunks_from_dir(data_dir, chunk_size, max_chars)
     return embed_chunks(chunks, embedder)
 
 
