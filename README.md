@@ -1,4 +1,4 @@
-# Pluggable Embedding based RAG
+# Pluggable Embedding RAG uses FAISS
 
 FAISS Index based retrieval.
 
