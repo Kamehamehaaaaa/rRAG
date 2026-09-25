@@ -6,6 +6,10 @@ class SentenceTransformerEmbedding(AbstractEmbedding):
     def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
         self.model = SentenceTransformer(model_name)
 
+    @property
+    def max_seq_length(self) -> int | None:
+        return self.model.max_seq_length
+
     def embed(self, text: str) -> List[float]:
         return self.embed_batch([text])[0]
 
