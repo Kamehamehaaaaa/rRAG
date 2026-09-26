@@ -4,29 +4,23 @@ from vector_db.chunk import Chunk
 from embedding.registry import get
 import numpy as np
 from loaders.registry import get_loader
+from captioning import AbstractCaptioner
 
 def make_chunks_from_dir(folder: Path,
                          max_sentences_per_chunk: int = 6,
-                         max_chars: int | None = None) -> List[Chunk]:
+                         max_chars: int | None = None,
+                         captioner: AbstractCaptioner | None = None) -> List[Chunk]:
     if not folder.is_dir():
-        return get_loader(folder).load(folder, chunk_size=max_sentences_per_chunk, max_chars=max_chars)
+        return get_loader(folder, captioner=captioner).load(folder, chunk_size=max_sentences_per_chunk, max_chars=max_chars)
     all_chunks = []
     for file in folder.rglob('*'):
         if not file.is_file():
             continue
         try:
-            loader = get_loader(file)
+            loader = get_loader(file, captioner=captioner)
         except ValueError:
             continue  # unsupported extension
         all_chunks.extend(loader.load(file, max_sentences_per_chunk, max_chars=max_chars))
-        # raw = txt_file.read_text(encoding='utf-8')
-        # chunks = split_into_chunks(raw,
-        #                          max_sentences=max_sentences_per_chunk,
-        #                          delimiter='\n')
-        # for idx, sent in enumerate(chunks, start=1):
-        #     all_chunks.append(Chunk(doc_id=txt_file.stem,
-        #                             chunk_id=f"{idx}",
-        #                             text=sent))
     return all_chunks
 
 def embed_chunks(chunks: List[Chunk], embedder, batch_size: int = 64) -> List[Chunk]:

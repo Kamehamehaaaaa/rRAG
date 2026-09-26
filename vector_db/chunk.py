@@ -1,16 +1,15 @@
-from typing import List
+from typing import List, Optional
 import numpy as np
+from pathlib import Path
+from dataclasses import dataclass
 
+@dataclass
 class Chunk:
-    text: str
-    vector: np.ndarray
     doc_id: str
     chunk_id: str
-    metadata: dict  
-
-    def __init__(self, text: str, vector: np.ndarray = None, doc_id: str = None, chunk_id: str = None, metadata: dict = None):
-        self.text = text
-        self.vector = vector
-        self.doc_id = doc_id
-        self.chunk_id = chunk_id
-        self.metadata = metadata or {}
+    text: str
+    vector: Optional[np.ndarray] = None
+    modality: str = "text"
+    source_path: Optional[Path] = None
+    page_num: Optional[int] = None
+    image_path: Optional[Path] = None  
