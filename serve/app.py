@@ -14,7 +14,7 @@ from pydantic import BaseModel
 
 import config
 from embedding.registry import get
-from vector_db.index_store.cache import IndexCache
+from knowledge_store.index_store.cache import IndexCache
 
 _cache: IndexCache | None = None
 _embedder = None

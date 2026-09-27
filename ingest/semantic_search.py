@@ -1,4 +1,4 @@
-from vector_db.index_store.cache import IndexCache
+from knowledge_store.index_store.cache import IndexCache
 from pathlib import Path
 from embedding.registry import get
 from ingest.pipeline import add_data

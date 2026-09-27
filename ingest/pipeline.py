@@ -3,7 +3,7 @@ from pathlib import Path
 from captioning import AbstractCaptioner
 from ingest.utils import make_chunks_from_dir, embed_chunks
 from embedding.registry import get
-from vector_db.index_store.faiss_index import persist_index, update_index
+from knowledge_store.index_store.faiss_index import persist_index, update_index
 from chunk import Chunk
 
 from embedding.abstract_embedding import AbstractEmbedding
