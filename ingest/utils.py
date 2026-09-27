@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import List
-from vector_db.chunk import Chunk
+from chunk import Chunk
 from embedding.registry import get
 import numpy as np
 from loaders.registry import get_loader

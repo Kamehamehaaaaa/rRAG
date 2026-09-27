@@ -1,6 +1,6 @@
 from . import AbstractLoader
 from captioning import AbstractCaptioner
-from vector_db.chunk import Chunk
+from chunk import Chunk
 
 from typing import List, Optional
 from pathlib import Path

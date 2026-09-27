@@ -1,13 +1,13 @@
 import logging
 
 import faiss
-from vector_db.chunk import Chunk
+from chunk import Chunk
 from typing import List
 import numpy as np
 import json
 from pathlib import Path
-from .manifest import _write_generation, _write_manifest, _read_generation
-from .paths import next_gen_number, new_gen_dir, current_gen_dir, gc_old_generations
+from ..manifest import _write_generation, _write_manifest, _read_generation
+from ..paths import next_gen_number, new_gen_dir, current_gen_dir, gc_old_generations
 
 logger = logging.getLogger(__name__)
 

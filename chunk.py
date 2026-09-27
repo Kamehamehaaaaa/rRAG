@@ -13,3 +13,7 @@ class Chunk:
     source_path: Optional[Path] = None
     page_num: Optional[int] = None
     image_path: Optional[Path] = None  
+
+    def __post_init__(self):
+        if self.modality == "image" and self.image_path is None:
+            raise ValueError("image_path is required when modality='image'")

@@ -5,7 +5,7 @@ from typing import List, Optional
 import fitz  # PyMuPDF
 
 from captioning import AbstractCaptioner
-from vector_db.chunk import Chunk
+from chunk import Chunk
 from . import AbstractLoader
 from .text_utils import split_into_chunks
 

@@ -2,8 +2,8 @@ from pathlib import Path
 import faiss
 import json
 from typing import List, Tuple
-from vector_db.index_store.manifest import _read_generation
-from .paths import current_gen_dir, next_gen_number, new_gen_dir
+from vector_db.manifest import _read_generation
+from ..paths import current_gen_dir, next_gen_number, new_gen_dir
 import logging
 
 logging.basicConfig(level=logging.INFO)
