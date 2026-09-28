@@ -2,7 +2,7 @@
 from pathlib import Path
 from typing import List
 from pypdf import PdfReader
-from vector_db.chunk import Chunk
+from chunk import Chunk
 from . import AbstractLoader
 from .text_utils import split_into_chunks
 

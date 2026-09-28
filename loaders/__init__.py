@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import List
-from vector_db.chunk import Chunk
+from chunk import Chunk
 
 class AbstractLoader(ABC):
     @abstractmethod

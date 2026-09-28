@@ -27,6 +27,9 @@ def main() -> None:
     common.add_argument("--data-dir", type=Path, required=True)
     common.add_argument("--embedding", default="sentence_transformer")
     common.add_argument("--chunk-size", type=int, default=6)
+    common.add_argument("--captioner", default=config.CAPTIONING_MODEL)
+    common.add_argument("--graph-backend", default=config.GRAPH_EXTRACTOR)
+    common.add_argument("--no-graph", action="store_true", help="skip knowledge-graph extraction")
 
     subparsers.add_parser("build", parents=[common], help="First-time index build (fails if one already exists).")
     subparsers.add_parser("add", parents=[common], help="Append new data to the existing index.")
@@ -41,12 +44,28 @@ def main() -> None:
                 f"manifest already exists at {config.MANIFEST} — use 'add' instead of 'build', "
                 f"or delete {config.INDEX_ROOT} to start over."
             )
-        data_pipeline(args.data_dir, config.INDEX_ROOT, config.MANIFEST, embedder, args.chunk_size)
+        data_pipeline(
+            args.data_dir, 
+            config.INDEX_ROOT, 
+            config.MANIFEST, 
+            embedder, 
+            args.chunk_size,
+            args.captioner, 
+            args.graph_extractor
+        )
 
     elif args.command == "add":
         if not config.MANIFEST.exists():
             parser.error(f"no existing index at {config.MANIFEST} — run 'build' first.")
-        add_data(args.data_dir, config.INDEX_ROOT, config.MANIFEST, embedder, args.chunk_size)
+        add_data(
+            args.data_dir, 
+            config.INDEX_ROOT, 
+            config.MANIFEST, 
+            embedder, 
+            args.chunk_size,
+            args.captioner, 
+            args.graph_extractor
+        )
 
 
 if __name__ == "__main__":
