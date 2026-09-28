@@ -27,6 +27,10 @@ class GraphCache:
             self._nx = to_networkx(self.graph)
             self._gen_cached = cur_gen
 
+    def get(self) -> GraphData:
+        self._ensure_loaded()
+        return self.graph
+
     def expand(self, seed_positions: List[int], hops: int = 2)-> List[int]:
         self._ensure_loaded()
         if self._nx is None or self._nx.number_of_nodes() == 0:
