@@ -34,10 +34,10 @@ def get_loader(path: Path, captioner: AbstractCaptioner | None = None) -> Abstra
         return _LOADERS.setdefault(suffix, TextLoader())
     
     if suffix == ".pdf":
-        return _LOADERS.setdefault(suffix, PDFLoader())
+        return _LOADERS.setdefault(suffix, PDFLoader(captioner))
     
     if suffix == ".pptx":
-        return _LOADERS.setdefault(suffix, PPTXLoader())
+        return _LOADERS.setdefault(suffix, PPTXLoader(captioner))
     
     if suffix in _IMAGE_EXTENSIONS:
         return _LOADERS.setdefault(suffix, ImageLoader(captioner))
